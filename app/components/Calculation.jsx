@@ -1,7 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { CurrencyState } from "../CurrencyContext";
 
 const Calculation = () => {
+  const { currencies, setCurrencies } = CurrencyState();
+  console.log(currencies);
   //   const ref = useRef(text1);
   return (
     <div className="md:min-h-[calc(100vh-4rem)] flex flex-col justify-between m-0 w-full md:h-auto md:w-1/4 bg-gray-900">
@@ -23,13 +26,13 @@ const Calculation = () => {
                 className="text-center bg-red-600 text-white w-16 cursor-pointer select-all"
                 // onChange={handleSelect}
               >
-                {/* {Object.keys(currencies).map((currency, index) => {
+                {Object.keys(currencies).map((currency, index) => {
                   return (
                     <option key={index} value={currencies[currency]}>
-                      {currency}
+                      {currency.substring(3, 6)}
                     </option>
                   );
-                })} */}
+                })}
               </select>
             </span>
           </h4>

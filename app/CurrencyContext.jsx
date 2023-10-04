@@ -5,7 +5,7 @@ import CurrenciesList from "./config/api";
 
 const Currency = createContext();
 const CurrencyContext = ({ children }) => {
-  const [currencies, setCurrencies] = useState();
+  const [currencies, setCurrencies] = useState([]);
   const getApi = async () => {
     return fetch(
       `https://api.apilayer.com/currency_data/live?base=USD&symbols=EUR,GBP&apikey=cnQzjVDhxL2K5kedT2O9A9SYhgCKr8yC`

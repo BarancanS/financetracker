@@ -1,16 +1,21 @@
+"use client";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Navbar from "./components/Navbar";
-import Calculation from "./components/Calculation";
-import List from "./components/List";
-
+import CalculationAndList from "./components/CalculationAndList";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db, onSnapshot } from "../shared/firebase";
+import SignIn from "./components/SignIn";
 export default function Home() {
-  return (
+  const [user, loading, error] = useAuthState(auth);
+  return user ? (
     <main className="min-h-screen">
       <Navbar />
-      <div className="min-h-[calc(100vh-4rem)] flex flex-col md:flex-row">
-        <Calculation />
-        <List />
-      </div>
+      <CalculationAndList />
     </main>
+  ) : (
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-black">
+      <SignIn />
+    </div>
   );
 }

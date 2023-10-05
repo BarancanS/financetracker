@@ -1,56 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { CurrencyState } from "../CurrencyContext";
-import { auth } from "../../shared/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import {
-  doc,
-  updateDoc,
-  getDoc,
-  query,
-  collection,
-  getDocs,
-  where,
-} from "firebase/firestore";
-import { db } from "../../shared/firebase";
 
 const Income = () => {
-  const { currencies, setCurrencies } = CurrencyState();
+  const { currencies, setCurrencies, incomeData, setIncomeData } =
+    CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [listCurrency, setListCurrency] = useState("");
   const [explanation, setExplanation] = useState("");
-  const [documentId, setDocumentId] = useState("");
-  const [user, loading] = useAuthState(auth);
-
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
   };
 
-  useEffect(() => {
-    if (user) {
-      const fetchDocumentIdData = async () => {
-        try {
-          const userRef = collection(db, "users");
-          const userQuery = query(userRef, where("uid", "==", user.uid));
-          const querySnapshot = await getDocs(userQuery);
+  // Function to retrieve data from local storage
 
-          if (!querySnapshot.empty) {
-            const data = querySnapshot.docs[0].id;
-            setDocumentId(data);
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchDocumentIdData();
-    }
-  }, [user]);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     // Create a Date object to get the current date and time
@@ -66,45 +33,39 @@ const Income = () => {
       timeZoneName: "short",
     });
 
-    // Check if user is authenticated and has a documentId
-    if (user && documentId) {
-      const userId = documentId;
-      const userDocRef = doc(db, "users", userId);
+    // Create a new item with the form data
+    const newItem = {
+      genres: "Income",
+      amount: parseFloat(amount),
+      currency: listCurrency,
+      explanation,
+      date: formattedDate,
+    };
 
-      try {
-        // Get the user's document
-        const userDoc = await getDoc(userDocRef);
-        const userData = userDoc.data();
+    // Retrieve the existing data from local storage
+    const existingData = JSON.parse(localStorage.getItem("incomeData")) || [];
 
-        // Create a new List item with the form data and formatted date/time
-        const newItem = {
-          genres: "Income",
-          amount: parseFloat(amount),
-          currency: listCurrency,
-          explanation,
-          date: formattedDate,
-        };
+    // Update the data array with the new item
+    const updatedData = [...existingData, newItem];
 
-        // Update the user's List in Firebase
-        const updatedList = [...(userData.List || []), newItem];
-        await updateDoc(userDocRef, { List: updatedList });
+    // Store the updated data in local storage
+    localStorage.setItem("incomeData", JSON.stringify(updatedData));
 
-        // Close the form modal
-        setOpen(false);
+    // Close the form modal
+    setOpen(false);
 
-        // Set a 1-second delay before opening the success modal
-        setTimeout(() => {
-          setSuccessModalOpen(true);
-        }, 500);
+    // Set a 1-second delay before opening the success modal
+    setTimeout(() => {
+      setSuccessModalOpen(true);
+    }, 500);
 
-        // Clear form inputs
-        setAmount("");
-        setListCurrency("");
-        setExplanation("");
-      } catch (error) {
-        console.error("Error updating user data:", error);
-      }
-    }
+    // Clear form inputs
+    setAmount("");
+    setListCurrency("");
+    setExplanation("");
+
+    // Update the state with the new data
+    setIncomeData(updatedData);
   };
 
   return (
@@ -116,7 +77,7 @@ const Income = () => {
         Income
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="inline-block bg-gray-900 w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
+        <div className="inline-block bg-gray-900 w-8/12 max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
           <h3 className="text-lg font-medium leading-6 text-gray-100 text-center mt-4">
             Income
           </h3>
@@ -134,6 +95,7 @@ const Income = () => {
                   onChange={(e) => setAmount(e.target.value)}
                   value={amount}
                   required
+                  placeholder="Money Amount"
                 />
               </div>
               <div className="mt-4">
@@ -169,6 +131,7 @@ const Income = () => {
                   onChange={(e) => setExplanation(e.target.value)}
                   value={explanation}
                   required
+                  placeholder="Detail"
                 />
               </div>
               <div className="flex justify-center items-center my-6">
@@ -183,13 +146,12 @@ const Income = () => {
           </div>
         </div>
       </Modal>
-
       {/* Success Modal */}
       {successModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-4">Success!</h2>
-            <p>You are added your income successfully.</p>
+            <p>You have added your income successfully.</p>
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 mt-4"
               onClick={handleSuccessModalClose}

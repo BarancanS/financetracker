@@ -1,22 +1,100 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db, onSnapshot } from "../../shared/firebase";
+import { query, collection, where } from "firebase/firestore";
 import { CurrencyState } from "../CurrencyContext";
-
+import Income from "./Income";
+import Expense from "./Expense";
 const Calculation = () => {
   const { currencies, setCurrencies } = CurrencyState();
-  console.log(currencies);
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const [list, setList] = useState([]);
+  const [status, setStatus] = useState(true);
+
+  useEffect(() => {
+    if (user && user.uid) {
+      const fetchData = async () => {
+        const userRef = collection(db, "users");
+        const userQuery = query(userRef, where("uid", "==", user.uid));
+
+        const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const data = querySnapshot.docs[0].data();
+            setList(data.List);
+            setName(data.name);
+
+            const fetchDataForItems = async () => {
+              const itemsData = [];
+
+              for (const items of data.List) {
+                try {
+                  const response = await fetch(profileSingleCoin(items.id));
+                  const itemData = await response.json();
+                  itemsData.push(itemData);
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+            };
+
+            fetchDataForItems();
+          }
+        });
+
+        return () => unsubscribe();
+      };
+
+      fetchData();
+    }
+  }, [user]);
+
+  const handleStatusChange = () => {
+    setStatus(!status);
+  };
+
+  const fetchData = useCallback(async () => {
+    if (!user || !user.uid) {
+      return; // Return early if user is not available
+    }
+
+    const userRef = collection(db, "users");
+    const userQuery = query(userRef, where("uid", "==", user.uid));
+
+    const unsubscribe = onSnapshot(userQuery, (querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const data = querySnapshot.docs[0].data();
+        setList(data.List);
+        setName(data.name);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  useEffect(() => {
+    fetchData(); // Call the fetchData function unconditionally
+  }, [fetchData]);
+
+  // let asd = (currencies["USDEUR"] * 10) / currencies["USDAUD"];
+  // let dsa = (currencies["USDEUR"] * 20) / currencies["USDAUD"];
+  // let qwe = asd + dsa;
+  // console.log(qwe);
   //   const ref = useRef(text1);
   return (
     <main className="min-h-[calc(100vh-4rem)] w-full flex flex-col md:flex-row">
       <div className="md:min-h-[calc(100vh-4rem)] flex flex-col justify-between m-0 w-full md:h-auto md:w-1/4 bg-gray-900">
         <div>
           <div className="flex justify-around my-4">
-            <button className="w-auto  px-4 py-2 bg-green-500 text-gray-100 rounded-xl hover:bg-green-400">
+            {/* <button className="w-auto  px-4 py-2 bg-green-500 text-gray-100 rounded-xl hover:bg-green-400">
               Income
-            </button>
-            <button className="w-auto  px-4 py-2 bg-red-500 text-gray-100 rounded-xl hover:bg-red-400">
+            </button> */}
+            <Income />
+            {/* <button className="w-auto  px-4 py-2 bg-red-500 text-gray-100 rounded-xl hover:bg-red-400">
               Expense
-            </button>
+            </button> */}
+            <Expense />
           </div>
           <div>
             <h4 className="text-white text-center font-mono">
@@ -83,7 +161,27 @@ const Calculation = () => {
         </div>
         <div className="flex justify-center items-center w-full mt-4">
           <div>
-            <h4 className="text-2xl">No Match...</h4>
+            {list.map((items, index) => {
+              let bgColor;
+              if (items.genres.includes("Expense")) {
+                bgColor = "bg-[#A7F3D0]";
+              } else {
+                bgColor = "bg-[#FECACA]";
+              }
+              return (
+                <div
+                  key={index}
+                  className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between max-w-[80vh] w-[500px]`}
+                >
+                  <div>
+                    <div>
+                      <div>Type:{items.genres}</div>
+                    </div>
+                    <div className="opacity-50">{items.date}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -76,7 +76,7 @@ function AuthPage() {
   return user ? (
     <div className="">
       <button
-        className="text-green-200 text-lg font-mono bg-red-700 p-2  rounded-lg"
+        className="w-auto  px-4 py-2 bg-green-500 text-gray-100 rounded-xl hover:bg-green-400"
         onClick={logout}
       >
         LogOut

@@ -155,7 +155,10 @@ const Calculation = () => {
           </div>
         </div>
         <div className="flex justify-center items-center w-full mt-4">
-          <div>
+          <div
+            className="max-md:w-11/12 w-5/12 "
+            style={{ wordBreak: "break-word" }}
+          >
             {filteredItems.length === 0 ? (
               <p className="text-2xl">No match...</p>
             ) : (
@@ -169,15 +172,18 @@ const Calculation = () => {
                 return (
                   <div
                     key={index}
-                    className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between max-w-[80vh] w-[500px]`}
+                    className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between`}
                   >
                     <div>
-                      <div className="flex flex-row gap-2">
-                        <h1>Type:{items.genres}</h1>
-                        <h1>Amount:{items.amount}</h1>
-                        <h1>{items.currency?.substring(3, 6)}</h1>
-                        <h1>Explanation:{items.explanation}</h1>
+                      <div className="flex flex-row max-md:flex-col gap-2">
+                        <p>Type:{items.genres}</p>
+                        <p>Amount:{items.amount}</p>
                       </div>
+                      <div className="flex flex-row max-md:flex-col gap-2">
+                        <p>{items.currency?.substring(3, 6)}</p>
+                        <p>Explanation:{items.explanation}</p>
+                      </div>
+
                       <div className="opacity-50">{items.date}</div>
                     </div>
                     <div className="flex flex-col justify-center items-center">

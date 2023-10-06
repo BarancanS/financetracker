@@ -77,7 +77,7 @@ const Expense = () => {
         Expense
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className="inline-block bg-gray-900 w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
+        <div className="inline-block bg-gray-900 w-11/12 max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
           <h3 className="text-lg font-medium leading-6 text-gray-100 text-center mt-4">
             Expense
           </h3>

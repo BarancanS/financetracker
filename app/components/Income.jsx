@@ -3,11 +3,11 @@ import Modal from "./Modal";
 import { CurrencyState } from "../CurrencyContext";
 
 const Income = () => {
-  const { currencies, setCurrencies, incomeData, setIncomeData } =
+  const { currencies, setCurrencies, StorageData, setStorageData } =
     CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
-  const [listCurrency, setListCurrency] = useState("");
+  const [listCurrency, setListCurrency] = useState();
   const [explanation, setExplanation] = useState("");
   const [successModalOpen, setSuccessModalOpen] = useState(false);
 
@@ -43,13 +43,13 @@ const Income = () => {
     };
 
     // Retrieve the existing data from local storage
-    const existingData = JSON.parse(localStorage.getItem("incomeData")) || [];
+    const existingData = JSON.parse(localStorage.getItem("storageData")) || [];
 
     // Update the data array with the new item
     const updatedData = [...existingData, newItem];
 
     // Store the updated data in local storage
-    localStorage.setItem("incomeData", JSON.stringify(updatedData));
+    localStorage.setItem("storageData", JSON.stringify(updatedData));
 
     // Close the form modal
     setOpen(false);
@@ -65,7 +65,7 @@ const Income = () => {
     setExplanation("");
 
     // Update the state with the new data
-    setIncomeData(updatedData);
+    setStorageData(updatedData);
   };
 
   return (

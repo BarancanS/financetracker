@@ -1,29 +1,69 @@
+// Calculation.js
 "use client";
 import React, { useState, useEffect } from "react";
 import Income from "./Income";
 import Expense from "./Expense";
 import { CurrencyState } from "../CurrencyContext";
+import EditLocalStorageButton from "./EditLocalStorageButton";
+import EditLocalData from "./EditLocalData";
 
 const Calculation = () => {
-  const { currencies, setCurrencies, incomeData, setIncomeData } =
-    CurrencyState();
-  const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    // Load data from local storage when the component mounts
-    const localData = JSON.parse(localStorage.getItem("incomeData")) || [];
-    setFilteredData(localData);
-  }, [incomeData]);
+  const {
+    currencies,
+    storageData,
+    totalResult,
+    setStorageData,
+    totalIncome,
+    totalExpense,
+    selectedCurrency,
+    setSelectedCurrency,
+  } = CurrencyState();
+  const [filterGenres, setFilterGenres] = useState("");
+  const [filterCurrency, setFilterCurrency] = useState("");
+  const [editStorageData, setEditStorageData] = useState(null);
 
   const handleDeleteItem = (index) => {
-    const updatedData = [...filteredData];
+    const updatedData = [...storageData];
     updatedData.splice(index, 1);
-    setFilteredData(updatedData);
-
-    // Update local storage with the modified data
-    localStorage.setItem("incomeData", JSON.stringify(updatedData));
+    setStorageData(updatedData);
+    localStorage.setItem("storageData", JSON.stringify(updatedData));
   };
 
+  const handleEditLocalData = (dataToEdit) => {
+    setEditStorageData(dataToEdit);
+  };
+
+  const handleEditLocalStorage = (editedData) => {
+    const updatedData = storageData.map((item) => {
+      if (item === editStorageData) {
+        return editedData;
+      }
+      return item;
+    });
+
+    localStorage.setItem("storageData", JSON.stringify(updatedData));
+    setStorageData(updatedData);
+    setEditStorageData(null);
+  };
+
+  const filteredItems = storageData.filter((item) => {
+    // Filter based on genres
+    const passesGenresFilter =
+      filterGenres === "" || item.genres.includes(filterGenres);
+
+    // Filter based on currency
+    const passesCurrencyFilter =
+      filterCurrency === "" || item.currency.includes(filterCurrency);
+
+    // Return true only if both filters pass
+    return passesGenresFilter && passesCurrencyFilter;
+  });
+
+  function clearFilter() {
+    setFilterGenres("");
+    setFilterCurrency("");
+  }
+  console.log(filterCurrency);
   return (
     <main className="min-h-[calc(100vh-4rem)] w-full flex flex-col md:flex-row">
       <div className="md:min-h-[calc(100vh-4rem)] flex flex-col justify-between m-0 w-full md:h-auto md:w-1/4 bg-gray-900">
@@ -39,6 +79,8 @@ const Calculation = () => {
                 <select
                   name="currencies"
                   className="text-center bg-red-600 text-white w-16 cursor-pointer select-all"
+                  onChange={(e) => setSelectedCurrency(e.target.value)}
+                  value={selectedCurrency}
                 >
                   {Object.keys(currencies).map((currency, index) => {
                     return (
@@ -54,12 +96,12 @@ const Calculation = () => {
           <div className="flex flex-wrap justify-around items-center my-4">
             <div>
               <p className="text-center text-gray-100 font-mono">
-                Total Incomes:{" "}
+                Total Incomes: {totalIncome}
               </p>
             </div>
             <div>
               <p className="text-center text-gray-100 font-mono">
-                Total Expenses:{" "}
+                Total Expenses: {totalExpense}
               </p>
             </div>
           </div>
@@ -75,20 +117,38 @@ const Calculation = () => {
           <div className="mr-4 py-2 flex flex-row items-center justify-center">
             Filters:
             <div className="mr-4">
-              <select name="" id="" className="py-2">
+              <select
+                name=""
+                id=""
+                className="py-2"
+                onChange={(e) => setFilterGenres(e.target.value)}
+              >
                 <option value="">None</option>
-                <option value="">Income</option>
-                <option value="">Expense</option>
+                <option value="Income">Income</option>
+                <option value="Expense">Expense</option>
               </select>
             </div>
             <div className="mr-4">
-              <input
-                type="text"
-                className="text-center py-2 text-gray-900 w-16 cursor-pointer select-all"
-              />
+              <select
+                name="currencies"
+                className="py-2"
+                onChange={(e) => setFilterCurrency(e.target.value)}
+                value={filterCurrency} // Use value instead of defaultValue
+              >
+                {Object.keys(currencies).map((currency, index) => {
+                  return (
+                    <option key={index} value={currency}>
+                      {currency.substring(3, 6)}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="mr-4">
-              <button className="bg-red-600 rounded-lg px-4 py-2 text-gray-100 hover:bg-red-500">
+              <button
+                className="bg-red-600 rounded-lg px-4 py-2 text-gray-100 hover:bg-red-500"
+                onClick={clearFilter}
+              >
                 Clear
               </button>
             </div>
@@ -96,7 +156,7 @@ const Calculation = () => {
         </div>
         <div className="flex justify-center items-center w-full mt-4">
           <div>
-            {filteredData.map((items, index) => {
+            {filteredItems.map((items, index) => {
               let bgColor;
               if (items.genres.includes("Expense")) {
                 bgColor = "bg-[#FECACA]";
@@ -109,25 +169,19 @@ const Calculation = () => {
                   className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between max-w-[80vh] w-[500px]`}
                 >
                   <div>
-                    <div>
-                      <div>Type: {items.genres}</div>
+                    <div className="flex flex-row gap-2">
+                      <h1>Type:{items.genres}</h1>
+                      <h1>Amount:{items.amount}</h1>
+                      <h1>{items.currency?.substring(3, 6)}</h1>
+                      <h1>Explanation:{items.explanation}</h1>
                     </div>
                     <div className="opacity-50">{items.date}</div>
                   </div>
                   <div className="flex flex-col justify-center items-center">
-                    <div className="m-1 text-lg cursor-pointer">
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        strokeWidth="0"
-                        viewBox="0 0 1024 1024"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 0 0 0-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 0 0 9.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z"></path>
-                      </svg>
-                    </div>
+                    <EditLocalStorageButton
+                      dataToEdit={items}
+                      onEdit={handleEditLocalData}
+                    />
                     <div
                       className="m-1 text-lg cursor-pointer"
                       onClick={() => handleDeleteItem(index)}
@@ -154,6 +208,13 @@ const Calculation = () => {
           </div>
         </div>
       </div>
+      {editStorageData && (
+        <EditLocalData
+          dataToEdit={editStorageData}
+          onSave={handleEditLocalStorage}
+          onCancel={() => setEditStorageData(null)}
+        />
+      )}
     </main>
   );
 };

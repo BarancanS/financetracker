@@ -17,7 +17,8 @@ const CurrencyContext = ({ children }) => {
 
   const totalIncome = storageData.reduce((sum, item) => {
     if (item.genres.includes("Income")) {
-      return sum + (selectedCurrency * item.amount) / currencies[item.currency];
+      const currencyRate = currencies[item.currency] || 1; // Use a default rate of 1 if currency is not found
+      return sum + (selectedCurrency * item.amount) / currencyRate;
     }
     return sum;
   }, 0);

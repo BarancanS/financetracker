@@ -156,55 +156,59 @@ const Calculation = () => {
         </div>
         <div className="flex justify-center items-center w-full mt-4">
           <div>
-            {filteredItems.map((items, index) => {
-              let bgColor;
-              if (items.genres.includes("Expense")) {
-                bgColor = "bg-[#FECACA]";
-              } else {
-                bgColor = "bg-[#A7F3D0]";
-              }
-              return (
-                <div
-                  key={index}
-                  className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between max-w-[80vh] w-[500px]`}
-                >
-                  <div>
-                    <div className="flex flex-row gap-2">
-                      <h1>Type:{items.genres}</h1>
-                      <h1>Amount:{items.amount}</h1>
-                      <h1>{items.currency?.substring(3, 6)}</h1>
-                      <h1>Explanation:{items.explanation}</h1>
+            {filteredItems.length === 0 ? (
+              <p className="text-2xl">No match...</p>
+            ) : (
+              filteredItems.map((items, index) => {
+                let bgColor;
+                if (items.genres.includes("Expense")) {
+                  bgColor = "bg-[#FECACA]";
+                } else {
+                  bgColor = "bg-[#A7F3D0]";
+                }
+                return (
+                  <div
+                    key={index}
+                    className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between max-w-[80vh] w-[500px]`}
+                  >
+                    <div>
+                      <div className="flex flex-row gap-2">
+                        <h1>Type:{items.genres}</h1>
+                        <h1>Amount:{items.amount}</h1>
+                        <h1>{items.currency?.substring(3, 6)}</h1>
+                        <h1>Explanation:{items.explanation}</h1>
+                      </div>
+                      <div className="opacity-50">{items.date}</div>
                     </div>
-                    <div className="opacity-50">{items.date}</div>
-                  </div>
-                  <div className="flex flex-col justify-center items-center">
-                    <EditLocalStorageButton
-                      dataToEdit={items}
-                      onEdit={handleEditLocalData}
-                    />
-                    <div
-                      className="m-1 text-lg cursor-pointer"
-                      onClick={() => handleDeleteItem(index)}
-                    >
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        strokeWidth="0"
-                        viewBox="0 0 24 24"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                    <div className="flex flex-col justify-center items-center">
+                      <EditLocalStorageButton
+                        dataToEdit={items}
+                        onEdit={handleEditLocalData}
+                      />
+                      <div
+                        className="m-1 text-lg cursor-pointer"
+                        onClick={() => handleDeleteItem(index)}
                       >
-                        <g>
-                          <path fill="none" d="M0 0h24v24H0z"></path>
-                          <path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-4.586 6l1.768 1.768-1.414 1.414L12 15.414l-1.768 1.768-1.414-1.414L10.586 14l-1.768-1.768 1.414-1.414L12 12.586l1.768-1.768 1.414 1.414L13.414 14zM9 4v2h6V4H9z"></path>
-                        </g>
-                      </svg>
+                        <svg
+                          stroke="currentColor"
+                          fill="currentColor"
+                          strokeWidth="0"
+                          viewBox="0 0 24 24"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g>
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-4.586 6l1.768 1.768-1.414 1.414L12 15.414l-1.768 1.768-1.414-1.414L10.586 14l-1.768-1.768 1.414-1.414L12 12.586l1.768-1.768 1.414 1.414L13.414 14zM9 4v2h6V4H9z"></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
       </div>

@@ -175,11 +175,11 @@ const Calculation = () => {
                     className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between`}
                   >
                     <div>
-                      <div className="flex flex-row max-md:flex-col gap-2">
+                      <div className="flex flex-row max-[300px]:flex-col gap-2">
                         <p>Type:{items.genres}</p>
                         <p>Amount:{items.amount}</p>
                       </div>
-                      <div className="flex flex-row max-md:flex-col gap-2">
+                      <div className="flex flex-row max-[300px]:flex-col gap-2">
                         <p>{items.currency?.substring(3, 6)}</p>
                         <p>Explanation:{items.explanation}</p>
                       </div>

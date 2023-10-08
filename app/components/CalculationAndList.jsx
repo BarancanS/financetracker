@@ -68,7 +68,7 @@ const Calculation = () => {
   return (
     <main className="min-h-[calc(100vh-4rem)] h-12 w-full flex flex-col">
       <div
-        className="w-full mx-auto flex flex-col justify-start items-center bg-center bg-cover max-md:h-[50rem] h-[30rem] py-4"
+        className="w-full mx-auto flex flex-col justify-start items-center bg-center bg-cover max-md:h-[52rem] h-[30rem] py-4"
         style={{
           backgroundImage: `url(/headerbanner.jpg)`,
         }}

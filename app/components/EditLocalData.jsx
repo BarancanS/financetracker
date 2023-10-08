@@ -69,7 +69,7 @@ const EditLocalData = ({ dataToEdit, onSave, onCancel }) => {
                 >
                   {Object.keys(currencies).map((currency, index) => (
                     <option key={index} value={currency}>
-                      {currency.substring(3, 6)}
+                      {currency}
                     </option>
                   ))}
                 </select>

@@ -10,6 +10,13 @@ const Expense = () => {
   const [listCurrency, setListCurrency] = useState("");
   const [explanation, setExplanation] = useState("");
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+
+  // This effect runs when 'data' changes
+  useEffect(() => {
+    // If there is data, the form is valid
+    setIsValid(listCurrency ? true : false);
+  }, [listCurrency]);
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
@@ -112,7 +119,7 @@ const Expense = () => {
                   >
                     {Object.keys(currencies).map((currency, index) => (
                       <option key={index} value={currency}>
-                        {currency.substring(3, 6)}
+                        {currency}
                       </option>
                     ))}
                   </select>
@@ -136,6 +143,7 @@ const Expense = () => {
                 <button
                   type="submit"
                   className="bg-opacity-50 bg-blue-600 text-gray-100 rounded-xl px-4 py-2"
+                  disabled={!isValid}
                 >
                   Submit
                 </button>
@@ -149,7 +157,7 @@ const Expense = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 text-black">
             <h2 className="text-2xl font-semibold mb-4">Success!</h2>
-            <p>You have added your Expense successfully.</p>
+            <p>You have added your Expense.</p>
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 mt-4"
               onClick={handleSuccessModalClose}

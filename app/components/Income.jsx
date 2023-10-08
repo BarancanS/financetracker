@@ -7,9 +7,16 @@ const Income = () => {
     CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
-  const [listCurrency, setListCurrency] = useState();
+  const [listCurrency, setListCurrency] = useState("");
   const [explanation, setExplanation] = useState("");
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+
+  // This effect runs when 'data' changes
+  useEffect(() => {
+    // If there is data, the form is valid
+    setIsValid(listCurrency ? true : false);
+  }, [listCurrency]);
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
@@ -108,12 +115,11 @@ const Income = () => {
                     id="listCurrency"
                     className="text-center text-white bg-[#c2b93cdf] rounded-lg  w-16 cursor-pointer select-all"
                     onChange={(e) => setListCurrency(e.target.value)}
-                    value={listCurrency}
                     required
                   >
                     {Object.keys(currencies).map((currency, index) => (
                       <option key={index} value={currency}>
-                        {currency.substring(3, 6)}
+                        {currency}
                       </option>
                     ))}
                   </select>
@@ -138,6 +144,7 @@ const Income = () => {
                 <button
                   type="submit"
                   className="bg-opacity-50 bg-blue-600 text-gray-100 rounded-xl px-4 py-2"
+                  disabled={!isValid}
                 >
                   Submit
                 </button>

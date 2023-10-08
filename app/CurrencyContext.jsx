@@ -45,20 +45,19 @@ const CurrencyContext = ({ children }) => {
     retrieveDataFromLocalStorage();
   }, []);
   useEffect(() => {
-    setSelectedCurrency("USDAED");
+    setSelectedCurrency("USD");
   }, [currencies]);
 
   const getApi = async () => {
-    return fetch(
-      `https://api.apilayer.com/currency_data/live?base=USD&symbols=EUR,GBP&apikey=Rhp5ADmq9UMaW0N7xdKyW79treHimgcM`
+    const options = { method: "GET", headers: { accept: "application/json" } };
+
+    fetch(
+      "https://api.fastforex.io/fetch-all?api_key=2ce9ba66d7-3e08299ab4-s28d4p",
+      options
     )
       .then((response) => response.json())
-      .then((data) => {
-        setCurrencies(data.quotes);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((response) => setCurrencies(response.results))
+      .catch((err) => console.error(err));
   };
   useEffect(() => {
     getApi();

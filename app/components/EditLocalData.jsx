@@ -25,7 +25,7 @@ const EditLocalData = ({ dataToEdit, onSave, onCancel }) => {
 
   return (
     <Modal open={true} onClose={onCancel}>
-      <div className="inline-block bg-gray-900 w-8/12 max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
+      <div className="inline-block bg-gray-900 w-11/12 max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
         <h3 className="text-lg font-medium leading-6 text-gray-100 text-center mt-4">
           Edit Income
         </h3>

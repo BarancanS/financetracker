@@ -176,10 +176,13 @@ const Calculation = () => {
             ) : (
               filteredItems.map((items, index) => {
                 let bgColor;
+                let textColor;
                 if (items.genres.includes("Expense")) {
                   bgColor = "bg-red-500";
+                  textColor = "text-zinc-300";
                 } else {
                   bgColor = "bg-[#FFD700]";
+                  textColor = "text-zinc-600";
                 }
                 return (
                   <div
@@ -196,7 +199,7 @@ const Calculation = () => {
                         <p>Explanation:{items.explanation}</p>
                       </div>
 
-                      <div className="text-zinc-600">{items.date}</div>
+                      <div className={`${textColor}`}>{items.date}</div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
                       <EditLocalStorageButton

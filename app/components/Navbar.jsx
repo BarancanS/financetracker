@@ -21,9 +21,10 @@ const Navbar = () => {
         Finance Tracker
       </Link>
       <ul className="flex flex-row gap-4">
-        <ul className="flex flex-row items-center justify-center gap-4">
-          <li className="text-[#FFD700]">
-            Balance:{totalResult.toString().substring(0, 6)}{" "}
+        <ul>
+          <li className="text-[#FFD700] flex flex-row max-md:flex-col items-center justify-center">
+            Balance:
+            <span className="text-white">{totalResult.toString()}</span>
           </li>
         </ul>
       </ul>

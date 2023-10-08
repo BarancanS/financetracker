@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 import { CurrencyState } from "../CurrencyContext";
 const Navbar = () => {
   const {
@@ -12,14 +13,21 @@ const Navbar = () => {
     setSelectedCurrency,
   } = CurrencyState();
   return (
-    <div className="w-full h-16 flex justify-between px-8 items-center bg-blue-700">
-      <h4 className="text-blue-100 text-xl font-serif">Finance Tracker</h4>
-      <div className="flex flex-row gap-4 items-center justify-center">
-        <h4 className="text-green-200 text-lg font-mono">
-          Balance:{totalResult.toString().substring(0, 5)}{" "}
-        </h4>
-      </div>
-    </div>
+    <section className="w-10/12 h-16 flex flex-row items-center justify-between mx-auto">
+      <Link
+        href="/"
+        className="text-[#FFD700] font-extrabold text-2xl max-md:text-base"
+      >
+        Finance Tracker
+      </Link>
+      <ul className="flex flex-row gap-4">
+        <ul className="flex flex-row items-center justify-center gap-4">
+          <li className="text-[#FFD700]">
+            Balance:{totalResult.toString().substring(0, 6)}{" "}
+          </li>
+        </ul>
+      </ul>
+    </section>
   );
 };
 

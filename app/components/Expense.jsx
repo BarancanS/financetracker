@@ -72,7 +72,7 @@ const Expense = () => {
     <main>
       <button
         onClick={() => setOpen(true)}
-        className="w-auto px-4 py-2 bg-red-500 text-gray-100 rounded-xl hover:bg-red-400"
+        className="w-24 max-md:w-20  py-2 bg-red-500 text-gray-100 rounded-xl hover:bg-red-400"
       >
         Expense
       </button>

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import CurrencyContext from "./CurrencyContext";
+import "react-alice-carousel/lib/alice-carousel.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

@@ -6,6 +6,7 @@ import Expense from "./Expense";
 import { CurrencyState } from "../CurrencyContext";
 import EditLocalStorageButton from "./EditLocalStorageButton";
 import EditLocalData from "./EditLocalData";
+import Carousel from "./Header/Carousel";
 
 const Calculation = () => {
   const {
@@ -65,20 +66,28 @@ const Calculation = () => {
   }
   console.log(filterCurrency);
   return (
-    <main className="min-h-[calc(100vh-4rem)] w-full flex flex-col md:flex-row">
-      <div className="md:min-h-[calc(100vh-4rem)] flex flex-col justify-between m-0 w-full md:h-auto md:w-1/4 bg-gray-900">
-        <div>
-          <div className="flex justify-around my-4">
-            <Income />
-            <Expense />
-          </div>
+    <main className="min-h-[calc(100vh-4rem)] h-12 w-full flex flex-col">
+      <div
+        className="w-full mx-auto flex flex-col justify-start items-center bg-center bg-cover max-md:h-[50rem] h-[30rem] py-4"
+        style={{
+          backgroundImage: `url(/headerbanner.jpg)`,
+        }}
+      >
+        <p className="text-6xl font-bold mt-10 text-center text-white">
+          Finance Tracker
+        </p>
+        <p className="text-gray-400 font-light mt-5 text-center">
+          Get All The Info Regarding Your Favorite currency
+        </p>
+        <Carousel />
+        <div className="flex flex-col items-center justify-center mt-4">
           <div>
-            <h4 className="text-white text-center font-mono">
-              Base Currency:
-              <span>
+            <div className="flex flex-row text-white text-left font-mono">
+              <div className="text-[#FFD700]">Base Currency:</div>
+              <div className="flex items-center justify-center">
                 <select
                   name="currencies"
-                  className="text-center bg-red-600 text-white w-16 cursor-pointer select-all"
+                  className="text-center bg-white  text-black rounded-lg w-16 cursor-pointer select-all"
                   onChange={(e) => setSelectedCurrency(e.target.value)}
                   value={selectedCurrency}
                 >
@@ -90,29 +99,30 @@ const Calculation = () => {
                     );
                   })}
                 </select>
-              </span>
-            </h4>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-wrap justify-around items-center my-4">
+          <div className="flex flex-col">
             <div>
-              <p className="text-center text-gray-100 font-mono">
-                Total Incomes: {totalIncome}
+              <p className="text-left  text-gray-100 font-mono">
+                <span className="text-[#FFD700]">Total Incomes:</span>
+                {totalIncome.toString().substring(0, 6)}
               </p>
             </div>
             <div>
-              <p className="text-center text-gray-100 font-mono">
-                Total Expenses: {totalExpense}
+              <p className="text-left text-gray-100 font-mono">
+                <span className="text-[#FFD700]">Total Expenses:</span>
+                {totalExpense.toString().substring(0, 6)}
               </p>
             </div>
           </div>
         </div>
-        <div>
-          <h4 className="text-gray-100 text-center mb-4 font-serif cursor-default hidden md:block">
-            Finance Tracker
-          </h4>
+        <div className="flex flex-row items-center gap-4 justify-center md:ml-4 py-4">
+          <Income />
+          <Expense />
         </div>
       </div>
-      <div className="m-0 w-full max-md:h-[calc(100vh-13.625rem)] md:w-3/4 bg-[#DBEAFE]">
+      <div className="m-0 w-full max-md:h-[calc(100vh-13.625rem)] min-h-[42.7rem]  bg-white">
         <div className="flex w-full justify-end mt-4 pr-2 md:pr-8">
           <div className="mr-4 py-2 flex flex-row items-center justify-center">
             Filters:
@@ -156,7 +166,7 @@ const Calculation = () => {
         </div>
         <div className="flex justify-center items-center w-full mt-4">
           <div
-            className="max-md:w-11/12 w-5/12 "
+            className="max-sm:w-11/12 w-[40rem] "
             style={{ wordBreak: "break-word" }}
           >
             {filteredItems.length === 0 ? (

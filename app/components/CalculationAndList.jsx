@@ -122,15 +122,15 @@ const Calculation = () => {
           <Expense />
         </div>
       </div>
-      <div className="m-0 w-full max-md:h-[calc(100vh-13.625rem)] min-h-[42.7rem]  bg-white">
-        <div className="flex w-full justify-end mt-4 pr-2 md:pr-8">
+      <div className="m-0 w-full max-md:h-[calc(100vh-13.625rem)] min-h-[42.7rem]  ">
+        <div className="flex  w-full max-md:justify-center justify-end mt-4 pr-2 ">
           <div className="mr-4 py-2 flex flex-row items-center justify-center">
             Filters:
             <div className="mr-4">
               <select
                 name=""
                 id=""
-                className="py-2"
+                className="py-2 rounded-lg"
                 onChange={(e) => setFilterGenres(e.target.value)}
               >
                 <option value="">None</option>
@@ -141,7 +141,7 @@ const Calculation = () => {
             <div className="mr-4">
               <select
                 name="currencies"
-                className="py-2"
+                className="py-2 rounded-lg"
                 onChange={(e) => setFilterCurrency(e.target.value)}
                 value={filterCurrency} // Use value instead of defaultValue
               >
@@ -166,23 +166,25 @@ const Calculation = () => {
         </div>
         <div className="flex justify-center items-center w-full mt-4">
           <div
-            className="max-sm:w-11/12 w-[40rem] "
+            className="max-sm:w-11/12 w-[40rem]"
             style={{ wordBreak: "break-word" }}
           >
             {filteredItems.length === 0 ? (
-              <p className="text-2xl">No match...</p>
+              <div>
+                <p className="text-2xl text-center">No match...</p>
+              </div>
             ) : (
               filteredItems.map((items, index) => {
                 let bgColor;
                 if (items.genres.includes("Expense")) {
-                  bgColor = "bg-[#FECACA]";
+                  bgColor = "bg-red-500";
                 } else {
-                  bgColor = "bg-[#A7F3D0]";
+                  bgColor = "bg-[#FFD700]";
                 }
                 return (
                   <div
                     key={index}
-                    className={`${bgColor} text-gray-900 p-4 rounded-xl my-4 flex justify-between`}
+                    className={`${bgColor} text-zinc-800 p-4 rounded-xl my-4 flex justify-between font-semibold`}
                   >
                     <div>
                       <div className="flex flex-row max-[300px]:flex-col gap-2">
@@ -194,7 +196,7 @@ const Calculation = () => {
                         <p>Explanation:{items.explanation}</p>
                       </div>
 
-                      <div className="opacity-50">{items.date}</div>
+                      <div className="text-zinc-600">{items.date}</div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
                       <EditLocalStorageButton
@@ -202,7 +204,7 @@ const Calculation = () => {
                         onEdit={handleEditLocalData}
                       />
                       <div
-                        className="m-1 text-lg cursor-pointer"
+                        className="m-1 text-2xl cursor-pointer"
                         onClick={() => handleDeleteItem(index)}
                       >
                         <svg

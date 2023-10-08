@@ -9,7 +9,7 @@ const EditLocalStorageButton = ({ dataToEdit, onEdit }) => {
   };
 
   return (
-    <div className="m-1 text-lg cursor-pointer" onClick={handleEditClick}>
+    <div className="m-1 text-2xl cursor-pointer" onClick={handleEditClick}>
       <svg
         stroke="currentColor"
         fill="currentColor"

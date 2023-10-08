@@ -5,9 +5,10 @@
   box-sizing: border-box;
   /* color: white; */
 }
-input {
-  /* color: #111; */
-}
+/* input,
+select {
+  color: #111;
+} */
 body {
   padding: 0;
   margin: 0;

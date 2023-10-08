@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Carousel = () => {
-  const [trendCoins, setTrendCoins] = useState([]);
+  const [currencyImages, setCurrencyImages] = useState([]);
   const handleDragStart = (e) => e.preventDefault();
 
   const responsive = {
@@ -18,37 +18,55 @@ const Carousel = () => {
     },
   };
   const items = [
-    <img
+    <Image
       src="/dollar.png"
       onDragStart={handleDragStart}
       role="presentation"
       className="mx-auto w-20"
+      width={50}
+      height={50}
+      alt="Dollar"
     />,
-    <img
-      src="/turkish-lira.png"
+    <Image
+      src="/turkishLira.png"
       onDragStart={handleDragStart}
       role="presentation"
       className="mx-auto w-20"
+      width={50}
+      height={50}
+      alt="Turkish Lira"
     />,
-    <img
+    <Image
       src="/aud.png"
       onDragStart={handleDragStart}
       role="presentation"
       className="mx-auto w-20"
+      width={50}
+      height={50}
+      alt="Aud"
     />,
-    <img
+    <Image
       src="/euro.png"
       onDragStart={handleDragStart}
       role="presentation"
       className="mx-auto w-20"
+      width={50}
+      height={50}
+      alt="Euro"
     />,
-    <img
+    <Image
       src="/pound.png"
       onDragStart={handleDragStart}
       role="presentation"
       className="mx-auto w-20"
+      width={50}
+      height={50}
+      alt="Pound"
     />,
   ];
+  useEffect(() => {
+    setCurrencyImages(items);
+  }, []);
 
   return (
     <div className="w-full flex flex-row gap-5 mt-10 items-center justify-center">
@@ -60,7 +78,7 @@ const Carousel = () => {
         disableDotsControls
         disableButtonsControls
         autoPlay
-        items={items}
+        items={currencyImages}
         responsive={responsive}
       />
     </div>

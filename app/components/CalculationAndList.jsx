@@ -64,7 +64,7 @@ const Calculation = () => {
     setFilterGenres("");
     setFilterCurrency("");
   }
-  console.log(filterCurrency);
+
   return (
     <main className="min-h-[calc(100vh-4rem)] h-12 w-full flex flex-col">
       <div
@@ -145,6 +145,7 @@ const Calculation = () => {
                 onChange={(e) => setFilterCurrency(e.target.value)}
                 value={filterCurrency} // Use value instead of defaultValue
               >
+                <option value="">None</option>
                 {Object.keys(currencies).map((currency, index) => {
                   return (
                     <option key={index} value={currency}>

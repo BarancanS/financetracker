@@ -22,7 +22,15 @@ const EditLocalData = ({ dataToEdit, onSave, onCancel }) => {
   const handleSave = () => {
     onSave(editedData);
   };
-
+  let bgColor;
+  let textColor;
+  if (editedData.genres.includes("Expense")) {
+    bgColor = "bg-red-500";
+    textColor = "text-zinc-300";
+  } else {
+    bgColor = "bg-[#FFD700]";
+    textColor = "text-zinc-600";
+  }
   return (
     <Modal open={true} onClose={onCancel}>
       <div className="inline-block bg-gray-900 w-11/12 max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl">
@@ -54,7 +62,7 @@ const EditLocalData = ({ dataToEdit, onSave, onCancel }) => {
               <div className="flex justify-center mt-2">
                 <select
                   id="listCurrency"
-                  className="text-center bg-red-600 text-white w-16 cursor-pointer select-all"
+                  className={`text-center text-white ${bgColor} rounded-lg w-16 cursor-pointer select-all`}
                   onChange={handleCurrencyChange}
                   value={editedData.currency}
                   required

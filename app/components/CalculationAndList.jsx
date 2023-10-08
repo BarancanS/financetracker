@@ -93,7 +93,7 @@ const Calculation = () => {
                 >
                   {Object.keys(currencies).map((currency, index) => {
                     return (
-                      <option key={index} value={currencies[currency]}>
+                      <option key={index} value={currency}>
                         {currency.substring(3, 6)}
                       </option>
                     );
@@ -107,12 +107,14 @@ const Calculation = () => {
               <p className="text-left  text-gray-100 font-mono">
                 <span className="text-[#FFD700]">Total Incomes:</span>
                 {totalIncome.toString().substring(0, 6)}
+                {selectedCurrency.toString().substring(3, 6)}
               </p>
             </div>
             <div>
               <p className="text-left text-gray-100 font-mono">
                 <span className="text-[#FFD700]">Total Expenses:</span>
-                {totalExpense.toString().substring(0, 6)}
+                {totalExpense.toString().substring(0, 6)}{" "}
+                {selectedCurrency.toString().substring(3, 6)}
               </p>
             </div>
           </div>

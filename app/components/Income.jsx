@@ -106,7 +106,7 @@ const Income = () => {
                 <div className="flex justify-center mt-2">
                   <select
                     id="listCurrency"
-                    className="text-center bg-red-600 text-white w-16 cursor-pointer select-all"
+                    className="text-center text-white bg-[#c2b93cdf] rounded-lg  w-16 cursor-pointer select-all"
                     onChange={(e) => setListCurrency(e.target.value)}
                     value={listCurrency}
                     required

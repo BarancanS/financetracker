@@ -13,19 +13,22 @@ const CurrencyContext = ({ children }) => {
   const [name, setName] = useState("");
   const [list, setList] = useState([]);
   const [storageData, setStorageData] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState();
+  const [selectedCurrency, setSelectedCurrency] = useState("");
 
   const totalIncome = storageData.reduce((sum, item) => {
     if (item.genres.includes("Income")) {
       const currencyRate = currencies[item.currency] || 1; // Use a default rate of 1 if currency is not found
-      return sum + (selectedCurrency * item.amount) / currencyRate;
+      return sum + (currencies[selectedCurrency] * item.amount) / currencyRate;
     }
     return sum;
   }, 0);
 
   const totalExpense = storageData.reduce((sum, item) => {
     if (item.genres.includes("Expense")) {
-      return sum + (selectedCurrency * item.amount) / currencies[item.currency];
+      return (
+        sum +
+        (currencies[selectedCurrency] * item.amount) / currencies[item.currency]
+      );
     }
     return sum;
   }, 0);
@@ -42,12 +45,12 @@ const CurrencyContext = ({ children }) => {
     retrieveDataFromLocalStorage();
   }, []);
   useEffect(() => {
-    setSelectedCurrency([currencies["USDAED"]]);
+    setSelectedCurrency("USDAED");
   }, [currencies]);
 
   const getApi = async () => {
     return fetch(
-      `https://api.apilayer.com/currency_data/live?base=USD&symbols=EUR,GBP&apikey=cnQzjVDhxL2K5kedT2O9A9SYhgCKr8yC`
+      `https://api.apilayer.com/currency_data/live?base=USD&symbols=EUR,GBP&apikey=Rhp5ADmq9UMaW0N7xdKyW79treHimgcM`
     )
       .then((response) => response.json())
       .then((data) => {

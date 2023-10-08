@@ -22,7 +22,7 @@ const Carousel = () => {
       src="/dollar.png"
       onDragStart={handleDragStart}
       role="presentation"
-      className="mx-auto w-20"
+      className="mx-auto w-16"
       width={50}
       height={50}
       alt="Dollar"
@@ -31,7 +31,7 @@ const Carousel = () => {
       src="/turkishLira.png"
       onDragStart={handleDragStart}
       role="presentation"
-      className="mx-auto w-20"
+      className="mx-auto w-16"
       width={50}
       height={50}
       alt="Turkish Lira"
@@ -40,7 +40,7 @@ const Carousel = () => {
       src="/aud.png"
       onDragStart={handleDragStart}
       role="presentation"
-      className="mx-auto w-20"
+      className="mx-auto w-16"
       width={50}
       height={50}
       alt="Aud"
@@ -49,7 +49,7 @@ const Carousel = () => {
       src="/euro.png"
       onDragStart={handleDragStart}
       role="presentation"
-      className="mx-auto w-20"
+      className="mx-auto w-16"
       width={50}
       height={50}
       alt="Euro"
@@ -58,7 +58,7 @@ const Carousel = () => {
       src="/pound.png"
       onDragStart={handleDragStart}
       role="presentation"
-      className="mx-auto w-20"
+      className="mx-auto w-16"
       width={50}
       height={50}
       alt="Pound"

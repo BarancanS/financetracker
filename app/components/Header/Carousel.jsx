@@ -31,6 +31,12 @@ const Carousel = () => {
       className="mx-auto w-20"
     />,
     <img
+      src="/aud.png"
+      onDragStart={handleDragStart}
+      role="presentation"
+      className="mx-auto w-20"
+    />,
+    <img
       src="/euro.png"
       onDragStart={handleDragStart}
       role="presentation"

@@ -27,7 +27,7 @@ const SelectCurrency = () => {
   };
 
   return (
-    <div className="mr-4">
+    <div className="mr-4 w-24">
       <Select
         value={options.find((option) => option.value === selectedCurrency)}
         onChange={(selectedOption) => setSelectedCurrency(selectedOption.value)}

@@ -19,7 +19,7 @@ const SelectCurrency = () => {
   // Ensure selectedCurrency is initialized with a default value
   useEffect(() => {
     if (!selectedCurrency && options.length > 0) {
-      setFilterCurrency(options[0].value); // Set the first currency as the default value
+      setFilterCurrency(""); // Set the first currency as the default value
     }
   }, [options, selectedCurrency, setFilterCurrency]);
 

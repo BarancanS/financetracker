@@ -68,12 +68,12 @@ const CustomSelect = () => {
         value={inputValue} // Use the controlled input value
         onChange={handleInputChange}
         ref={selectRef} // Add a ref to the input element
-        className="px-4 py-2 w-28 border rounded-lg focus:outline-none focus:border-blue-500"
+        className="px-4 py-2 w-20 h-6 border rounded-lg focus:outline-none focus:border-blue-500"
         onClick={toggleDropdown} // Use a click event to toggle the dropdown
       />
 
       {isOpen && (
-        <ul className="absolute top-0 left-28 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
+        <ul className="absolute top-0 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
           {options
             .filter((option) => option.label.toLowerCase().includes(inputValue))
             .map((option, index) => (

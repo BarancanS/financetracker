@@ -7,7 +7,9 @@ import { CurrencyState } from "../CurrencyContext";
 import EditLocalStorageButton from "./EditLocalStorageButton";
 import EditLocalData from "./EditLocalData";
 import Carousel from "./Header/Carousel";
-
+import SelectCurrency from "../components/Select/SelectCurrency";
+import SelectFilterCurrency from "../components/Select/SelectFilterCurrency";
+import SelectGenres from "./Select/SelectGenres";
 const Calculation = () => {
   const {
     currencies,
@@ -18,9 +20,12 @@ const Calculation = () => {
     totalExpense,
     selectedCurrency,
     setSelectedCurrency,
+    filterCurrency,
+    setFilterCurrency,
+    filterGenres,
+    setFilterGenres,
   } = CurrencyState();
-  const [filterGenres, setFilterGenres] = useState("");
-  const [filterCurrency, setFilterCurrency] = useState("");
+
   const [editStorageData, setEditStorageData] = useState(null);
 
   const handleDeleteItem = (index) => {
@@ -85,20 +90,7 @@ const Calculation = () => {
             <div className="flex flex-row text-left font-mono">
               <div className="text-[#FFD700]">Base Currency:</div>
               <div className="flex items-center justify-center">
-                <select
-                  name="currencies"
-                  className="text-center bg-white text-[#111]; rounded-lg w-16 cursor-pointer select-all"
-                  onChange={(e) => setSelectedCurrency(e.target.value)}
-                  value={selectedCurrency}
-                >
-                  {Object.keys(currencies).map((currency, index) => {
-                    return (
-                      <option key={index} value={currency}>
-                        {currency}
-                      </option>
-                    );
-                  })}
-                </select>
+                <SelectCurrency />
               </div>
             </div>
           </div>
@@ -128,35 +120,8 @@ const Calculation = () => {
         <div className="flex  w-full max-md:justify-center justify-end mt-4 pr-2 ">
           <div className="mr-4 py-2 flex flex-row items-center justify-center">
             Filters:
-            <div className="mr-4">
-              <select
-                name=""
-                id=""
-                className="py-2 rounded-lg"
-                onChange={(e) => setFilterGenres(e.target.value)}
-              >
-                <option value="">None</option>
-                <option value="Income">Income</option>
-                <option value="Expense">Expense</option>
-              </select>
-            </div>
-            <div className="mr-4">
-              <select
-                name="currencies"
-                className="py-2 rounded-lg"
-                onChange={(e) => setFilterCurrency(e.target.value)}
-                value={filterCurrency} // Use value instead of defaultValue
-              >
-                <option value="">None</option>
-                {Object.keys(currencies).map((currency, index) => {
-                  return (
-                    <option key={index} value={currency}>
-                      {currency}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <SelectGenres />
+            <SelectFilterCurrency />
             <div className="mr-4">
               <button
                 className="bg-red-600 rounded-lg px-4 py-2 text-gray-100 hover:bg-red-500"

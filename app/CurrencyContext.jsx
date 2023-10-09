@@ -14,6 +14,8 @@ const CurrencyContext = ({ children }) => {
   const [list, setList] = useState([]);
   const [storageData, setStorageData] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [filterCurrency, setFilterCurrency] = useState("");
+  const [filterGenres, setFilterGenres] = useState("");
 
   const totalIncome = storageData.reduce((sum, item) => {
     if (item.genres.includes("Income")) {
@@ -45,7 +47,7 @@ const CurrencyContext = ({ children }) => {
     retrieveDataFromLocalStorage();
   }, []);
   useEffect(() => {
-    setSelectedCurrency("USD");
+    setSelectedCurrency("");
   }, [currencies]);
 
   const getApi = async () => {
@@ -76,6 +78,10 @@ const CurrencyContext = ({ children }) => {
         totalExpense,
         setSelectedCurrency,
         selectedCurrency,
+        filterCurrency,
+        setFilterCurrency,
+        filterGenres,
+        setFilterGenres,
       }}
     >
       {children}

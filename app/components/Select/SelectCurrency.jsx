@@ -2,32 +2,31 @@ import React, { useState, useEffect, useRef } from "react";
 import { CurrencyState } from "../../CurrencyContext";
 
 const CustomSelect = () => {
-  const { currencies, selectedCurrency, setSelectedCurrency } = CurrencyState();
+  const {
+    currencies,
+    selectedCurrency,
+    setSelectedCurrency,
+    inputValue,
+    setInputValue,
+    options,
+  } = CurrencyState();
   const [storedCurrency, setStoredCurrency] = useState("EUR");
   const [isOpen, setIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState([]);
-  const [inputValue, setInputValue] = useState(searchInput); // Controlled input value
+  const [filteredOptions, setFilteredOptions] = useState(options); // Initialize with all options
   const selectRef = useRef(null);
-
-  const options = Object.keys(currencies).map((currency, index) => ({
-    value: currency,
-    label: currency,
-  }));
 
   useEffect(() => {
     const storedCurrency = localStorage.getItem("selectedCurrency");
     if (storedCurrency && currencies[storedCurrency]) {
       setSelectedCurrency(storedCurrency);
       setStoredCurrency(storedCurrency);
-      setSearchInput(storedCurrency); // Set searchInput to storedCurrency when the component mounts
+      setSearchInput(storedCurrency);
+      setInputValue(storedCurrency); // Set inputValue to storedCurrency
     }
-    // Initialize filteredOptions with all available options
-    setFilteredOptions(options);
-  }, [currencies, setSelectedCurrency, options]);
+  }, [currencies, setSelectedCurrency]);
 
   useEffect(() => {
-    // Add a click event listener to close the options when a click occurs outside of the select component
     const closeOptionsOnOutsideClick = (e) => {
       if (selectRef.current && !selectRef.current.contains(e.target)) {
         setIsOpen(false);
@@ -37,7 +36,6 @@ const CustomSelect = () => {
     document.addEventListener("click", closeOptionsOnOutsideClick);
 
     return () => {
-      // Remove the event listener when the component unmounts
       document.removeEventListener("click", closeOptionsOnOutsideClick);
     };
   }, []);
@@ -50,38 +48,43 @@ const CustomSelect = () => {
     const newCurrency = selectedOption.value;
     setSelectedCurrency(newCurrency);
     setStoredCurrency(newCurrency);
-    setInputValue(newCurrency); // Update inputValue with the selected option's value
-    setSearchInput(selectedOption.label);
+    setInputValue(newCurrency);
+    setSearchInput(newCurrency);
     localStorage.setItem("selectedCurrency", newCurrency);
     setIsOpen(false);
   };
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    setInputValue(inputValue); // Update the controlled input value
+    const inputValue = e.target.value.toUpperCase();
+    setInputValue(inputValue);
     setSearchInput(inputValue);
 
-    if (inputValue === "") {
-      // Reset filteredOptions to contain all options when input is cleared
-      setFilteredOptions(options);
-    } else {
-      const filtered = options.filter((option) =>
-        option.label.toLowerCase().includes(inputValue.toLowerCase())
-      );
-      setFilteredOptions(filtered);
+    // Filter options based on inputValue
+    const filtered = options.filter((option) =>
+      option.value.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setFilteredOptions(filtered);
+
+    const matchingOption = filtered.find(
+      (option) => option.value.toLowerCase() === inputValue.toLowerCase()
+    );
+
+    if (matchingOption) {
+      setSelectedCurrency(matchingOption.value);
+      localStorage.setItem("selectedCurrency", matchingOption.value);
     }
   };
 
   const handleInputClick = () => {
-    // Clear the input value when clicked
     setInputValue("");
   };
+
   const inputClass = () => {
     if (inputValue === "") {
       return "bg-red-600";
     } else if (
       filteredOptions.some(
-        (option) => option.label.toLowerCase() === inputValue.toLowerCase()
+        (option) => option.value.toLowerCase() === inputValue.toLowerCase()
       )
     ) {
       return "bg-green-500";
@@ -111,7 +114,7 @@ const CustomSelect = () => {
                 option.value === selectedCurrency ? "bg-stone-400" : ""
               }`}
             >
-              {option.label}
+              {option.value}
             </li>
           ))}
         </ul>

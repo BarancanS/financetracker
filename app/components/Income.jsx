@@ -4,19 +4,24 @@ import { CurrencyState } from "../CurrencyContext";
 import SelectCurrency from "./Select/SelectCurrency";
 
 const Income = () => {
-  const { StorageData, setStorageData, selectedCurrency, setSelectedCurrency } =
-    CurrencyState();
+  const {
+    StorageData,
+    setStorageData,
+    selectedCurrency,
+    inputValue,
+    setInputValue,
+    options,
+  } = CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [explanation, setExplanation] = useState("");
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [isValid, setIsValid] = useState(false);
 
-  // This effect runs when 'data' changes
   useEffect(() => {
-    // If there is data, the form is valid
-    setIsValid(selectedCurrency ? true : false);
-  }, [selectedCurrency]);
+    // If there is data and inputValue matches any option value
+    setIsValid(options.some((option) => option.value === inputValue));
+  }, [inputValue, options]);
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);

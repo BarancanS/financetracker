@@ -72,6 +72,11 @@ const CurrencyContext = ({ children }) => {
     getApi();
   }, []);
 
+  // My select options of SelectCurrency
+  const options = Object.keys(currencies).map((currency, index) => ({
+    value: currency,
+  }));
+
   return (
     <Currency.Provider
       value={{
@@ -94,6 +99,7 @@ const CurrencyContext = ({ children }) => {
         error,
         inputValue,
         setInputValue,
+        options,
       }}
     >
       {children}

@@ -2,11 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { CurrencyState } from "../../CurrencyContext";
 
 const CustomSelect = () => {
-  const { currencies, selectedCurrency, setSelectedCurrency } = CurrencyState();
+  const {
+    currencies,
+    selectedCurrency,
+    setSelectedCurrency,
+    inputValue,
+    setInputValue,
+  } = CurrencyState();
   const [storedCurrency, setStoredCurrency] = useState("EUR");
   const [isOpen, setIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(selectedCurrency); // Set initial value to selectedCurrency
-  const [inputValue, setInputValue] = useState(selectedCurrency); // Controlled input value
   const selectRef = useRef(null);
 
   const options = Object.keys(currencies).map((currency, index) => ({

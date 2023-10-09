@@ -16,13 +16,6 @@ const SelectCurrency = () => {
     label: currency,
   }));
 
-  // Ensure selectedCurrency is initialized with a default value
-  useEffect(() => {
-    if (!selectedCurrency && options.length > 0) {
-      setFilterCurrency(""); // Set the first currency as the default value
-    }
-  }, [options, selectedCurrency, setFilterCurrency]);
-
   // Custom styles for options
   const customStyles = {
     option: (provided, state) => ({

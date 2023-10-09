@@ -47,7 +47,7 @@ const CurrencyContext = ({ children }) => {
     retrieveDataFromLocalStorage();
   }, []);
   useEffect(() => {
-    setSelectedCurrency("");
+    setSelectedCurrency("USD");
   }, [currencies]);
 
   const getApi = async () => {

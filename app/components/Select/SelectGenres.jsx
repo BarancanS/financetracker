@@ -12,7 +12,7 @@ const SelectGenres = () => {
         onChange={(e) => setFilterGenres(e.target.value)}
         value={filterGenres}
       >
-        <option value="">None</option>
+        <option value="">Genres</option>
         <option value="Income">Income</option>
         <option value="Expense">Expense</option>
       </select>

@@ -33,7 +33,7 @@ const SelectCurrency = () => {
   };
 
   return (
-    <div className="mr-4">
+    <div className="mr-4 w-24">
       <Select
         value={options.find((option) => option.value === filterCurrency)}
         onChange={(selectedOption) => setFilterCurrency(selectedOption.value)}

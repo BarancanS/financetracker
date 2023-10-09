@@ -117,12 +117,12 @@ const Calculation = () => {
         </div>
       </div>
       <div className="m-0 w-full max-md:h-[calc(100vh-13.625rem)] min-h-[42.7rem]  ">
-        <div className="flex  w-full max-md:justify-center justify-end mt-4 pr-2 ">
-          <div className="mr-4 py-2 flex flex-row items-center justify-center">
-            Filters:
+        <div className="flex  w-full max-md:justify-center justify-end mt-4">
+          <div className="md:mr-4 py-2 flex flex-row items-center justify-center">
+            <span className="max-md:hidden">Filters:</span>
             <SelectGenres />
             <SelectFilterCurrency />
-            <div className="mr-4">
+            <div>
               <button
                 className="bg-red-600 rounded-lg px-4 py-2 text-gray-100 hover:bg-red-500"
                 onClick={clearFilter}

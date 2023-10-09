@@ -9,7 +9,7 @@ import {
 
 const Currency = createContext();
 const CurrencyContext = ({ children }) => {
-  const [currencies, setCurrencies] = useState([]);
+  const [currencies, setCurrencies] = useState({});
   const [name, setName] = useState("");
   const [list, setList] = useState([]);
   const [storageData, setStorageData] = useState([]);

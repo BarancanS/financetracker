@@ -82,12 +82,12 @@ const Calculation = () => {
         <Carousel />
         <div className="flex flex-col items-center justify-center mt-4">
           <div>
-            <div className="flex flex-row text-white text-left font-mono">
+            <div className="flex flex-row text-left font-mono">
               <div className="text-[#FFD700]">Base Currency:</div>
               <div className="flex items-center justify-center">
                 <select
                   name="currencies"
-                  className="text-center bg-white  text-black rounded-lg w-16 cursor-pointer select-all"
+                  className="text-center bg-white text-[#111]; rounded-lg w-16 cursor-pointer select-all"
                   onChange={(e) => setSelectedCurrency(e.target.value)}
                   value={selectedCurrency}
                 >

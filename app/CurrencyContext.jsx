@@ -47,8 +47,18 @@ const CurrencyContext = ({ children }) => {
     retrieveDataFromLocalStorage();
   }, []);
   useEffect(() => {
-    setSelectedCurrency("USD");
-  }, [currencies]);
+    // Check if a selected currency is stored in local storage
+    const storedCurrency = localStorage.getItem(
+      "selectedCurrency",
+      selectedCurrency
+    );
+
+    if (storedCurrency) {
+      setSelectedCurrency(storedCurrency);
+    } else {
+      setSelectedCurrency("EUR"); // Set a default value if no currency is stored
+    }
+  }, []);
 
   const getApi = async () => {
     const options = { method: "GET", headers: { accept: "application/json" } };

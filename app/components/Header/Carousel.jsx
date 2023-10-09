@@ -2,7 +2,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import AliceCarousel from "react-alice-carousel";
-import Link from "next/link";
 import Image from "next/image";
 
 const Carousel = () => {

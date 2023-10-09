@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { CurrencyState } from "../CurrencyContext";
+import SelectCurrency from "./Select/SelectCurrency";
 
 const Income = () => {
-  const { currencies, setCurrencies, StorageData, setStorageData } =
+  const { StorageData, setStorageData, selectedCurrency, setSelectedCurrency } =
     CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
-  const [listCurrency, setListCurrency] = useState("");
   const [explanation, setExplanation] = useState("");
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [isValid, setIsValid] = useState(false);
@@ -15,8 +15,8 @@ const Income = () => {
   // This effect runs when 'data' changes
   useEffect(() => {
     // If there is data, the form is valid
-    setIsValid(listCurrency ? true : false);
-  }, [listCurrency]);
+    setIsValid(selectedCurrency ? true : false);
+  }, [selectedCurrency]);
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
@@ -44,7 +44,7 @@ const Income = () => {
     const newItem = {
       genres: "Income",
       amount: parseFloat(amount),
-      currency: listCurrency,
+      currency: selectedCurrency,
       explanation,
       date: formattedDate,
     };
@@ -68,7 +68,6 @@ const Income = () => {
 
     // Clear form inputs
     setAmount("");
-    setListCurrency("");
     setExplanation("");
 
     // Update the state with the new data
@@ -106,27 +105,15 @@ const Income = () => {
                 />
               </div>
               <div className="mt-4">
-                <label htmlFor="listCurrency" className="text-gray-200 text-xl">
+                <label
+                  htmlFor="selectedCurrency"
+                  className="text-gray-200 text-xl"
+                >
                   Currency Type
                 </label>
                 <br />
                 <div className="flex justify-center mt-2">
-                  <select
-                    id="listCurrency"
-                    className="text-center text-white bg-[#c2b93cdf] rounded-lg  w-16 cursor-pointer select-all"
-                    onChange={(e) => setListCurrency(e.target.value)}
-                    required
-                  >
-                    {Object.keys(currencies).map((currency, index) => (
-                      <option
-                        key={index}
-                        value={currency}
-                        className="text-white"
-                      >
-                        {currency}
-                      </option>
-                    ))}
-                  </select>
+                  <SelectCurrency />
                 </div>
               </div>
               <div className="mt-4">

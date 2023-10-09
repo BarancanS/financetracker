@@ -33,6 +33,8 @@ const SelectCurrency = () => {
         options={options}
         styles={customStyles} // Apply custom styles to options
         defaultValue={filterCurrency}
+        id="selectbox"
+        instanceId="selectbox"
       />
     </div>
   );

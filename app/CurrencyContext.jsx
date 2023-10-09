@@ -46,19 +46,6 @@ const CurrencyContext = ({ children }) => {
     // Retrieve data from local storage when the component mounts
     retrieveDataFromLocalStorage();
   }, []);
-  useEffect(() => {
-    // Check if a selected currency is stored in local storage
-    const storedCurrency = localStorage.getItem(
-      "selectedCurrency",
-      selectedCurrency
-    );
-
-    if (storedCurrency) {
-      setSelectedCurrency(storedCurrency);
-    } else {
-      setSelectedCurrency("EUR"); // Set a default value if no currency is stored
-    }
-  }, []);
 
   const getApi = async () => {
     const options = { method: "GET", headers: { accept: "application/json" } };

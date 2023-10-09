@@ -5,8 +5,8 @@ const CustomSelect = () => {
   const { currencies, selectedCurrency, setSelectedCurrency } = CurrencyState();
   const [storedCurrency, setStoredCurrency] = useState("EUR");
   const [isOpen, setIsOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [searchInput, setSearchInput] = useState(selectedCurrency); // Set initial value to selectedCurrency
+  const [inputValue, setInputValue] = useState(selectedCurrency); // Controlled input value
   const selectRef = useRef(null);
 
   const options = Object.keys(currencies).map((currency, index) => ({
@@ -20,6 +20,7 @@ const CustomSelect = () => {
       setSelectedCurrency(storedCurrency);
       setStoredCurrency(storedCurrency);
       setSearchInput(storedCurrency); // Set searchInput to storedCurrency when the component mounts
+      setInputValue(storedCurrency); // Set inputValue to storedCurrency when the component mounts
     }
   }, [currencies, setSelectedCurrency]);
 
@@ -47,58 +48,45 @@ const CustomSelect = () => {
     const newCurrency = selectedOption.value;
     setSelectedCurrency(newCurrency);
     setStoredCurrency(newCurrency);
+    setInputValue(newCurrency); // Update inputValue with the selected option's value
     setSearchInput(selectedOption.label);
-    localStorage.setItem("selectedCurrency", newCurrency); // Save the selected currency to local storage
+    localStorage.setItem("selectedCurrency", newCurrency);
     setIsOpen(false);
   };
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value;
+    const inputValue = e.target.value.toLowerCase(); // Convert input value to lowercase
+    setInputValue(inputValue); // Update the controlled input value
     setSearchInput(inputValue);
-
-    if (inputValue === "") {
-      // Reset filteredOptions to contain all options when input is cleared
-      setFilteredOptions(options);
-    } else {
-      const filtered = options.filter((option) =>
-        option.label.toLowerCase().includes(inputValue.toLowerCase())
-      );
-      setFilteredOptions(filtered);
-    }
-
     setIsOpen(true); // Open the dropdown when the user starts typing
-  };
-
-  const clearSelection = () => {
-    setSelectedCurrency("");
-    setStoredCurrency("");
-    setSearchInput("");
-    localStorage.removeItem("selectedCurrency"); // Remove the selected currency from local storage
   };
 
   return (
     <div className="relative" ref={selectRef}>
       <input
         type="text"
-        value={searchInput}
+        value={inputValue} // Use the controlled input value
         onChange={handleInputChange}
-        onFocus={toggleDropdown}
-        className="px-4 py-2 w-20 h-6 border rounded-lg focus:outline-none focus:border-blue-500"
+        ref={selectRef} // Add a ref to the input element
+        className="px-4 py-2 w-28 border rounded-lg focus:outline-none focus:border-blue-500"
+        onClick={toggleDropdown} // Use a click event to toggle the dropdown
       />
 
       {isOpen && (
-        <ul className="absolute top-0 left-[5rem] z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
-          {filteredOptions.map((option, index) => (
-            <li
-              key={index}
-              onClick={() => handleOptionClick(option)}
-              className={`px-4 py-2 cursor-pointer hover:bg-stone-600 ${
-                option.value === selectedCurrency ? "bg-stone-400" : ""
-              }`}
-            >
-              {option.label}
-            </li>
-          ))}
+        <ul className="absolute top-0 left-28 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
+          {options
+            .filter((option) => option.label.toLowerCase().includes(inputValue))
+            .map((option, index) => (
+              <li
+                key={index}
+                onClick={() => handleOptionClick(option)}
+                className={`px-4 py-2 cursor-pointer hover:bg-stone-600 ${
+                  option.value === selectedCurrency ? "bg-stone-400" : ""
+                }`}
+              >
+                {option.label}
+              </li>
+            ))}
         </ul>
       )}
     </div>

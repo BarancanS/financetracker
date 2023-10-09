@@ -78,7 +78,7 @@ const Income = () => {
     <main>
       <button
         onClick={() => setOpen(true)}
-        className="w-24 max-md:w-20 py-2 bg-[#c2b93cdf] text-gray-100 rounded-xl hover:bg-[#c2b93c]"
+        className="w-24 max-md:w-20 py-2 bg-green-600 text-gray-100 rounded-xl hover:bg-green-400"
       >
         Income
       </button>

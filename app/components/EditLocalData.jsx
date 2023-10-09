@@ -28,7 +28,7 @@ const EditLocalData = ({ dataToEdit, onSave, onCancel }) => {
     bgColor = "bg-red-500";
     textColor = "text-zinc-300";
   } else {
-    bgColor = "bg-[#FFD700]";
+    bgColor = "bg-green-500";
     textColor = "text-zinc-600";
   }
   return (

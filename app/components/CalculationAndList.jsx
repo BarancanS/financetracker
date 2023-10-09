@@ -88,7 +88,7 @@ const Calculation = () => {
         <div className="flex flex-col items-center justify-center mt-4">
           <div>
             <div className="flex flex-row text-left font-mono">
-              <div className="text-[#FFD700]">Base Currency:</div>
+              <div className="text-green-500">Base Currency:</div>
               <div className="flex items-center justify-center">
                 <SelectCurrency />
               </div>
@@ -97,14 +97,14 @@ const Calculation = () => {
           <div className="flex flex-col">
             <div>
               <p className="text-left  text-gray-100 font-mono">
-                <span className="text-[#FFD700]">Total Incomes:</span>
+                <span className="text-green-500">Total Incomes:</span>
                 {totalIncome.toString().substring(0, 6)}
                 {selectedCurrency}
               </p>
             </div>
             <div>
               <p className="text-left text-gray-100 font-mono">
-                <span className="text-[#FFD700]">Total Expenses:</span>
+                <span className="text-green-500">Total Expenses:</span>
                 {totalExpense.toString().substring(0, 6)}
                 {selectedCurrency}
               </p>
@@ -149,7 +149,7 @@ const Calculation = () => {
                   bgColor = "bg-red-500";
                   textColor = "text-zinc-300";
                 } else {
-                  bgColor = "bg-[#FFD700]";
+                  bgColor = "bg-green-500";
                   textColor = "text-zinc-600";
                 }
                 return (

@@ -55,7 +55,7 @@ const CustomSelect = () => {
   };
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value.toLowerCase(); // Convert input value to lowercase
+    const inputValue = e.target.value.toUpperCase(); // Convert input value to lowercase
     setInputValue(inputValue); // Update the controlled input value
     setSearchInput(inputValue);
     setIsOpen(true); // Open the dropdown when the user starts typing
@@ -69,13 +69,16 @@ const CustomSelect = () => {
         onChange={handleInputChange}
         ref={selectRef} // Add a ref to the input element
         className="px-4 py-2 w-20 h-6 border rounded-lg focus:outline-none focus:border-blue-500"
-        onClick={toggleDropdown} // Use a click event to toggle the dropdown
+        onClick={() => {
+          setInputValue(""); // Clear the input value on click
+          setIsOpen(true); // Open the dropdown when the user clicks inside the input
+        }}
       />
 
       {isOpen && (
-        <ul className="absolute top-0 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
+        <ul className="absolute -top-3 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
           {options
-            .filter((option) => option.label.toLowerCase().includes(inputValue))
+            .filter((option) => option.label.toUpperCase().includes(inputValue))
             .map((option, index) => (
               <li
                 key={index}

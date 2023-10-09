@@ -97,7 +97,7 @@ const CustomSelect = () => {
         value={inputValue}
         onChange={handleInputChange}
         ref={selectRef}
-        className={`px-4 py-2 w-28 border rounded-lg focus:outline-none focus:border-blue-500 ${inputClass()}`}
+        className={`px-4 py-2 w-20 h-6 border rounded-lg focus:outline-none focus:border-blue-500 ${inputClass()}`}
         onClick={handleInputClick}
         onFocus={toggleDropdown}
       />

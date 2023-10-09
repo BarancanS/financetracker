@@ -2,16 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { CurrencyState } from "../../CurrencyContext";
 
 const CustomSelect = () => {
-  const {
-    currencies,
-    selectedCurrency,
-    setSelectedCurrency,
-    inputValue,
-    setInputValue,
-  } = CurrencyState();
+  const { currencies, selectedCurrency, setSelectedCurrency } = CurrencyState();
   const [storedCurrency, setStoredCurrency] = useState("EUR");
   const [isOpen, setIsOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState(selectedCurrency); // Set initial value to selectedCurrency
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [inputValue, setInputValue] = useState(searchInput); // Controlled input value
   const selectRef = useRef(null);
 
   const options = Object.keys(currencies).map((currency, index) => ({
@@ -25,9 +21,10 @@ const CustomSelect = () => {
       setSelectedCurrency(storedCurrency);
       setStoredCurrency(storedCurrency);
       setSearchInput(storedCurrency); // Set searchInput to storedCurrency when the component mounts
-      setInputValue(storedCurrency); // Set inputValue to storedCurrency when the component mounts
     }
-  }, [currencies, setSelectedCurrency]);
+    // Initialize filteredOptions with all available options
+    setFilteredOptions(options);
+  }, [currencies, setSelectedCurrency, options]);
 
   useEffect(() => {
     // Add a click event listener to close the options when a click occurs outside of the select component
@@ -60,41 +57,63 @@ const CustomSelect = () => {
   };
 
   const handleInputChange = (e) => {
-    const inputValue = e.target.value.toUpperCase(); // Convert input value to lowercase
+    const inputValue = e.target.value;
     setInputValue(inputValue); // Update the controlled input value
     setSearchInput(inputValue);
-    setIsOpen(true); // Open the dropdown when the user starts typing
+
+    if (inputValue === "") {
+      // Reset filteredOptions to contain all options when input is cleared
+      setFilteredOptions(options);
+    } else {
+      const filtered = options.filter((option) =>
+        option.label.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      setFilteredOptions(filtered);
+    }
+  };
+
+  const handleInputClick = () => {
+    // Clear the input value when clicked
+    setInputValue("");
+  };
+  const inputClass = () => {
+    if (inputValue === "") {
+      return "bg-red-600";
+    } else if (
+      filteredOptions.some(
+        (option) => option.label.toLowerCase() === inputValue.toLowerCase()
+      )
+    ) {
+      return "bg-green-500";
+    } else {
+      return "bg-red-600";
+    }
   };
 
   return (
     <div className="relative" ref={selectRef}>
       <input
         type="text"
-        value={inputValue} // Use the controlled input value
+        value={inputValue}
         onChange={handleInputChange}
-        ref={selectRef} // Add a ref to the input element
-        className="px-4 py-2 w-20 h-6 border rounded-lg focus:outline-none focus:border-blue-500"
-        onClick={() => {
-          setInputValue(""); // Clear the input value on click
-          setIsOpen(true); // Open the dropdown when the user clicks inside the input
-        }}
+        ref={selectRef}
+        className={`px-4 py-2 w-28 border rounded-lg focus:outline-none focus:border-blue-500 ${inputClass()}`}
+        onClick={handleInputClick}
+        onFocus={toggleDropdown}
       />
-
       {isOpen && (
-        <ul className="absolute -top-3 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
-          {options
-            .filter((option) => option.label.toUpperCase().includes(inputValue))
-            .map((option, index) => (
-              <li
-                key={index}
-                onClick={() => handleOptionClick(option)}
-                className={`px-4 py-2 cursor-pointer hover:bg-stone-600 ${
-                  option.value === selectedCurrency ? "bg-stone-400" : ""
-                }`}
-              >
-                {option.label}
-              </li>
-            ))}
+        <ul className="absolute top-0 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
+          {filteredOptions.map((option, index) => (
+            <li
+              key={index}
+              onClick={() => handleOptionClick(option)}
+              className={`px-4 py-2 cursor-pointer hover:bg-stone-600 ${
+                option.value === selectedCurrency ? "bg-stone-400" : ""
+              }`}
+            >
+              {option.label}
+            </li>
+          ))}
         </ul>
       )}
     </div>

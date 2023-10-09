@@ -10,6 +10,7 @@ const Navbar = () => {
     totalResult,
     totalIncome,
     totalExpense,
+    selectedCurrency,
     setSelectedCurrency,
   } = CurrencyState();
   return (
@@ -24,7 +25,10 @@ const Navbar = () => {
         <ul>
           <li className="text-[#FFD700] flex flex-row max-md:flex-col items-center justify-center">
             Balance:
-            <span className="text-white">{totalResult.toString()}</span>
+            <span className="text-white">
+              {totalResult.toString()}
+              {selectedCurrency}
+            </span>
           </li>
         </ul>
       </ul>

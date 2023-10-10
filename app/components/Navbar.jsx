@@ -25,10 +25,8 @@ const Navbar = () => {
         <ul>
           <li className="text-green-500 flex flex-row max-md:flex-col items-center justify-center">
             Balance:
-            <span className="text-white">
-              {totalResult.toString()}
-              {selectedCurrency}
-            </span>
+            <span className="text-white">{totalResult.toString()}</span>
+            <span className="text-green-500">{selectedCurrency}</span>
           </li>
         </ul>
       </ul>

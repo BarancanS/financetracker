@@ -5,12 +5,12 @@ import SelectCurrency from "./Select/SelectCurrency";
 
 const Expense = () => {
   const {
-    currencies,
-    setCurrencies,
     StorageData,
     setStorageData,
     selectedCurrency,
-    setSelectedCurrency,
+    inputValue,
+    setInputValue,
+    options,
   } = CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
@@ -18,11 +18,10 @@ const Expense = () => {
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [isValid, setIsValid] = useState(false);
 
-  // This effect runs when 'data' changes
   useEffect(() => {
-    // If there is data, the form is valid
-    setIsValid(selectedCurrency ? true : false);
-  }, [selectedCurrency]);
+    // If there is data and inputValue matches any option value
+    setIsValid(options.some((option) => option.value === inputValue));
+  }, [inputValue, options]);
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
@@ -84,7 +83,7 @@ const Expense = () => {
     <main>
       <button
         onClick={() => setOpen(true)}
-        className="w-24 max-md:w-20  py-2 bg-red-500 text-gray-100 rounded-xl hover:bg-red-400"
+        className="w-24 max-md:w-20 py-2 bg-red-600 text-gray-100 rounded-xl hover:bg-red-400"
       >
         Expense
       </button>
@@ -107,10 +106,14 @@ const Expense = () => {
                   onChange={(e) => setAmount(e.target.value)}
                   value={amount}
                   required
+                  placeholder="Money Amount"
                 />
               </div>
               <div className="mt-4">
-                <label htmlFor="listCurrency" className="text-gray-200 text-xl">
+                <label
+                  htmlFor="selectedCurrency"
+                  className="text-gray-200 text-xl"
+                >
                   Currency Type
                 </label>
                 <br />
@@ -130,6 +133,7 @@ const Expense = () => {
                   onChange={(e) => setExplanation(e.target.value)}
                   value={explanation}
                   required
+                  placeholder="Detail"
                 />
               </div>
               <div className="flex justify-center items-center my-6">
@@ -150,7 +154,7 @@ const Expense = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-blue-950 rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-4">Success!</h2>
-            <p>You have added your Expense.</p>
+            <p>You have added your Expense successfully.</p>
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 mt-4"
               onClick={handleSuccessModalClose}

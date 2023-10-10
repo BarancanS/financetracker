@@ -13,7 +13,7 @@ const CustomSelect = () => {
   const [storedCurrency, setStoredCurrency] = useState("EUR");
   const [isOpen, setIsOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState(options); // Initialize with all options
+  const [filteredOptions, setFilteredOptions] = useState([]); // Initialize with an empty array
   const selectRef = useRef(null);
 
   useEffect(() => {
@@ -40,6 +40,14 @@ const CustomSelect = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Filter options based on inputValue whenever it changes
+    const filtered = options.filter((option) =>
+      option.value.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setFilteredOptions(filtered);
+  }, [inputValue, options]);
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -59,13 +67,7 @@ const CustomSelect = () => {
     setInputValue(inputValue);
     setSearchInput(inputValue);
 
-    // Filter options based on inputValue
-    const filtered = options.filter((option) =>
-      option.value.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    setFilteredOptions(filtered);
-
-    const matchingOption = filtered.find(
+    const matchingOption = options.find(
       (option) => option.value.toLowerCase() === inputValue.toLowerCase()
     );
 

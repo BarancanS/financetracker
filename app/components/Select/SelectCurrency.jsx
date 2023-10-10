@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CurrencyState } from "../../CurrencyContext";
 
-const CustomSelect = () => {
+const SelectCurrency = () => {
   const {
     currencies,
     selectedCurrency,
@@ -125,4 +125,4 @@ const CustomSelect = () => {
   );
 };
 
-export default CustomSelect;
+export default SelectCurrency;

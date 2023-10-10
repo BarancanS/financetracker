@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { CurrencyState } from "../../CurrencyContext";
 
-const SelectCurrency = () => {
+const SelectFilterCurrency = () => {
   const {
     currencies,
     selectedCurrency,
@@ -40,4 +40,4 @@ const SelectCurrency = () => {
   );
 };
 
-export default SelectCurrency;
+export default SelectFilterCurrency;

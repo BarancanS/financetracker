@@ -1,18 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { CurrencyState } from "../CurrencyContext";
+
 const Navbar = () => {
-  const {
-    currencies,
-    storageData,
-    setStorageData,
-    totalResult,
-    totalIncome,
-    totalExpense,
-    selectedCurrency,
-    setSelectedCurrency,
-  } = CurrencyState();
+  const { totalResult, selectedCurrency } = CurrencyState();
   return (
     <section className="w-10/12 h-16 flex flex-row items-center justify-between mx-auto">
       <Link

@@ -12,9 +12,7 @@ import SelectFilterCurrency from "../components/Select/SelectFilterCurrency";
 import SelectGenres from "./Select/SelectGenres";
 const Calculation = () => {
   const {
-    currencies,
     storageData,
-    totalResult,
     setStorageData,
     totalIncome,
     totalExpense,
@@ -51,13 +49,10 @@ const Calculation = () => {
     setStorageData(updatedData);
     setEditStorageData(null);
   };
-
+  // Filter based on genres and currency
   const filteredItems = storageData.filter((item) => {
-    // Filter based on genres
     const passesGenresFilter =
       filterGenres === "" || item.genres.includes(filterGenres);
-
-    // Filter based on currency
     const passesCurrencyFilter =
       filterCurrency === "" || item.currency?.includes(filterCurrency);
 

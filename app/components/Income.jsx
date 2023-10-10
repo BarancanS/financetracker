@@ -4,14 +4,8 @@ import { CurrencyState } from "../CurrencyContext";
 import SelectCurrency from "./Select/SelectCurrency";
 
 const Income = () => {
-  const {
-    StorageData,
-    setStorageData,
-    selectedCurrency,
-    inputValue,
-    setInputValue,
-    options,
-  } = CurrencyState();
+  const { StorageData, setStorageData, selectedCurrency, inputValue, options } =
+    CurrencyState();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [explanation, setExplanation] = useState("");

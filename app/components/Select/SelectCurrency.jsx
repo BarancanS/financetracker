@@ -107,7 +107,7 @@ const SelectCurrency = () => {
         onFocus={toggleDropdown}
       />
       {isOpen && (
-        <ul className="absolute -top-5 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
+        <ul className="absolute -top-3 left-20 z-20 mt-1 w-28 h-60 overflow-y-scroll border rounded-lg border-gray-300 bg-black">
           {filteredOptions.map((option, index) => (
             <li
               key={index}

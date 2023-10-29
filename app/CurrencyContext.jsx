@@ -54,7 +54,7 @@ const CurrencyContext = ({ children }) => {
           headers: { accept: "application/json" },
         };
         const response = await fetch(
-          "https://api.fastforex.io/fetch-all?api_key=dd57b3df3d-5899918f38-s2tn9l",
+          "https://api.fastforex.io/fetch-all?api_key=862ec248d4-4659da85a4-s3ajov",
           options
         );
         if (!response.ok) {
